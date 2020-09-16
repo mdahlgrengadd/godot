@@ -55,17 +55,25 @@ class SMBPitchShift {
 
 public:
 	void PitchShift(float pitchShift, long numSampsToProcess, long fftFrameSize, long osamp, float sampleRate, float *indata, float *outdata, int stride);
-
-	SMBPitchShift() {
-		gRover = 0;
+	void PitchShift_Int16(float pitchShift, long numSampsToProcess, long fftFrameSize, long osamp, float sampleRate, int16_t *indata, AudioFrame *outdata,int stride, int64_t offset, int32_t increment);
+	void PitchShift_AudioFrame(float pitchShift, long numSampsToProcess, long fftFrameSize, long osamp, float sampleRate, AudioFrame *indata, AudioFrame *outdata,int stride);	
+	void reset(bool full_reset) {
+		if(full_reset) {
+			memset(gFFTworksp, 0, 2 * MAX_FRAME_LENGTH * sizeof(float));
+			gRover = 0;
+		}
+		// reset phases	
 		memset(gInFIFO, 0, MAX_FRAME_LENGTH * sizeof(float));
 		memset(gOutFIFO, 0, MAX_FRAME_LENGTH * sizeof(float));
-		memset(gFFTworksp, 0, 2 * MAX_FRAME_LENGTH * sizeof(float));
 		memset(gLastPhase, 0, (MAX_FRAME_LENGTH / 2 + 1) * sizeof(float));
 		memset(gSumPhase, 0, (MAX_FRAME_LENGTH / 2 + 1) * sizeof(float));
 		memset(gOutputAccum, 0, 2 * MAX_FRAME_LENGTH * sizeof(float));
 		memset(gAnaFreq, 0, MAX_FRAME_LENGTH * sizeof(float));
 		memset(gAnaMagn, 0, MAX_FRAME_LENGTH * sizeof(float));
+	}
+
+	SMBPitchShift() {
+		reset(true);
 	}
 };
 

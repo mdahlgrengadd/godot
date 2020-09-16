@@ -127,6 +127,7 @@
 #include "scene/main/timer.h"
 #include "scene/main/viewport.h"
 #include "scene/resources/audio_stream_sample.h"
+#include "scene/resources/audio_stream_pitchedsample.h"
 #include "scene/resources/bit_map.h"
 #include "scene/resources/box_shape.h"
 #include "scene/resources/capsule_shape.h"
@@ -695,6 +696,7 @@ void register_scene_types() {
 #endif
 	ClassDB::register_virtual_class<VideoStream>();
 	ClassDB::register_class<AudioStreamSample>();
+	ClassDB::register_class<AudioStreamPitchedSample>();
 
 	OS::get_singleton()->yield(); //may take time to init
 
